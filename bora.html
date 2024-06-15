@@ -81,13 +81,13 @@
         import { getDatabase, ref, set, remove, onChildAdded, onChildRemoved } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCkV-9v8PAz86u7maC_alk2LzPzwfJ_5J8",
-            authDomain: "aplikasi-chat-jartel.firebaseapp.com",
-            projectId: "aplikasi-chat-jartel",
-            storageBucket: "aplikasi-chat-jartel.appspot.com",
-            messagingSenderId: "154376664175",
-            appId: "1:154376664175:web:7d1e412b170a4fd9c5899a",
-            measurementId: "G-6B95VW5VWX"
+            apiKey: "AIzaSyCZjFutC25A9ToGn6OD_1BLxSukceqrjZM",
+            authDomain: "jartelchat.firebaseapp.com",
+            databaseURL: "https://jartelchat-default-rtdb.firebaseio.com",
+            projectId: "jartelchat",
+            storageBucket: "jartelchat.appspot.com",
+            messagingSenderId: "432193338207",
+            appId: "1:432193338207:web:f31049b8f8f7f4cdfad4ea"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -103,7 +103,7 @@
             sessionStorage.setItem('sender',sender);
         }
 
-        // TO SEND MESSAGES
+        // Mengirim pesan
         module.sendMsg = function sendMsg(){
             var msg = msgTxt.value;
             var timestamp = new Date().getTime();
@@ -115,7 +115,7 @@
             msgTxt.value="";
         }
 
-        // TO RECEIVE MSG
+        // Untuk menerima pesan
         onChildAdded(ref(db,"messages"), (data)=>{
             if(data.val().sender == sender){
                 messages.innerHTML += "<div style=justify-content:end class=outer id="+data.key+"><div id=inner class=me>you : "+data.val().msg+"<button id=dltMsg onclick=module.dltMsg("+data.key+")>DELETE</button></div></div>";
@@ -124,12 +124,12 @@
             }
         })
 
-        // TO DELETE MSG
+        // Untuk menghapus pesan
         module.dltMsg = function dltMsg(key){
             remove(ref(db,"messages/"+key));
         }
 
-        // WHEN MSG IS DELETED
+        // menghapus data pesan
         onChildRemoved(ref(db,"messages"),(data)=>{
             var msgBox = document.getElementById(data.key);
             messages.removeChild(msgBox);
